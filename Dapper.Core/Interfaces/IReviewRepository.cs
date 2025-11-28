@@ -5,8 +5,8 @@ namespace Dapper.Core.Interfaces;
 public interface IReviewRepository
 {
     IEnumerable<Review> GetReviewsByMovieId(int movieId);
-    Review GetReviewById(int id);
-    int AddReview(Review review);
+    int CreateReview(Review review);
+    bool MovieExists(int movieId);
     bool UpdateReview(Review review);
     bool DeleteReview(int id);
 }

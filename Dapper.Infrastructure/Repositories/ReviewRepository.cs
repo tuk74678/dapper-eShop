@@ -13,27 +13,26 @@ public class ReviewRepository: IReviewRepository
     {
         _dbConnection = dbConnection;
     }
-
-    // public int Insert(Review obj)
-    // {
-    //     IDbConnection conn = _dbConnection.GetConnection();
-    //     return conn.Execute("INSERT INTO Reviews VALUES (@MovieId, @UserId, @Rating, @Comment, @CreatedAt)", obj);
-    // }
-    
+    // Return review(s) via MovieId
     public IEnumerable<Review> GetReviewsByMovieId(int movieId)
     {
         return _dbConnection.Query<Review>("SELECT Id, MovieId, UserId, Rating, Comment, CreatedAt " +
                                            "FROM Reviews WHERE MovieId = @MovieId", new  { MovieId = movieId });
     }
-
-    public Review GetReviewById(int id)
+    // Create a review via user input
+    public int CreateReview(Review review)
     {
-        throw new NotImplementedException();
+        return _dbConnection.Execute(
+            "INSERT INTO Reviews (MovieId, UserId, Rating, Comment, CreatedAt) " +
+            "VALUES (@MovieId, @UserId, @Rating, @Comment, @CreatedAt)",
+            review);
     }
-
-    public int AddReview(Review review)
+    
+    public bool MovieExists(int movieId)
     {
-        throw new NotImplementedException();
+        var count = _dbConnection.QuerySingle<int>(
+            "SELECT COUNT(1) FROM Movies WHERE Id = @Id", new { Id = movieId });
+        return count > 0;
     }
 
     public bool UpdateReview(Review review)
