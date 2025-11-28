@@ -22,7 +22,8 @@ public class ReviewRepository: IReviewRepository
     
     public IEnumerable<Review> GetReviewsByMovieId(int movieId)
     {
-        throw new NotImplementedException();
+        return _dbConnection.Query<Review>("SELECT Id, MovieId, UserId, Rating, Comment, CreatedAt " +
+                                           "FROM Reviews WHERE MovieId = @MovieId", new  { MovieId = movieId });
     }
 
     public Review GetReviewById(int id)
