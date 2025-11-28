@@ -1,31 +1,46 @@
-﻿using Dapper.Core.Entities;
+﻿using System.Data;
+using Dapper.Core.Entities;
 using Dapper.Core.Interfaces;
+using Dapper.Infrastructure.Data;
 
 namespace Dapper.Infrastructure.Repositories;
 
-public class ReviewRepository: IRepository<Reviews>
+public class ReviewRepository: IReviewRepository
 {
-    public int Insert(Reviews obj)
+    private readonly IDbConnection _dbConnection;
+    
+    public ReviewRepository(IDbConnection dbConnection)
+    {
+        _dbConnection = dbConnection;
+    }
+
+    // public int Insert(Review obj)
+    // {
+    //     IDbConnection conn = _dbConnection.GetConnection();
+    //     return conn.Execute("INSERT INTO Reviews VALUES (@MovieId, @UserId, @Rating, @Comment, @CreatedAt)", obj);
+    // }
+    
+    public IEnumerable<Review> GetReviewsByMovieId(int movieId)
     {
         throw new NotImplementedException();
     }
 
-    public int Delete(int id)
+    public Review GetReviewById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public int Update(Reviews obj)
+    public int AddReview(Review review)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Reviews> GetAll()
+    public bool UpdateReview(Review review)
     {
         throw new NotImplementedException();
     }
 
-    public Reviews GetById(int id)
+    public bool DeleteReview(int id)
     {
         throw new NotImplementedException();
     }

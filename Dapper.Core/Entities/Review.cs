@@ -1,6 +1,6 @@
 ﻿namespace Dapper.Core.Entities;
 
-public class Reviews
+public class Review
 {
     public int Id { get; set; }
     public int UserId { get; set; }
@@ -9,6 +9,6 @@ public class Reviews
     public string Comment { get; set; }
     public DateTime CreatedAt { get; set; }
     // Navigation property
-    public Movies Movie { get; set; }
+    public Movie Movie { get; set; }
     
 }
