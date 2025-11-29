@@ -9,7 +9,7 @@ public interface IReviewRepository
     bool MovieExists(int movieId);
     bool ReviewExists(int reviewId);
     int DeleteReview(int id);
-    bool UpdateReview(Review review);
+    int UpdateReview(Review review);
     
 }
     

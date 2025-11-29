@@ -49,9 +49,10 @@ public class ReviewRepository: IReviewRepository
             "DELETE FROM Reviews WHERE Id = @id", new { Id = id });
     }
 
-    public bool UpdateReview(Review review)
+    public int UpdateReview(Review review)
     {
-        throw new NotImplementedException();
+        return _dbConnection.Execute(
+            "UPDATE Reviews SET Comment = @Comment, CreatedAt=@CreatedAt WHERE Id = @Id", review);
     }
 
 }

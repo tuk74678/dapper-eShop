@@ -34,7 +34,7 @@ public class ReviewService
         }
     }
 
-    public void dddReview()
+    public void addReview()
     {
         Console.WriteLine("Please enter the MovieId: ");
         // Check MovieId does exist in the Movies table
@@ -60,7 +60,7 @@ public class ReviewService
     public void deleteReview()
     {
         Console.WriteLine("Please enter the ReviewId: ");
-        // Check MovieId does exist in the Movies table
+        // Check if the ReviewId does exist in the Reviews table
         int reviewId = int.Parse(Console.ReadLine());
         if (!_reviewRepository.ReviewExists(reviewId))
         {
@@ -70,10 +70,32 @@ public class ReviewService
         _reviewRepository.DeleteReview(reviewId);
         Console.WriteLine($"Review Id: {reviewId} has been deleted.");
     }
+
+    public void updateReview()
+    {
+        Console.WriteLine("Please enter the ReviewId: ");
+        // Check if the ReviewId does exist in the Reviews table
+        int reviewId = int.Parse(Console.ReadLine());
+        if (!_reviewRepository.ReviewExists(reviewId))
+        {
+            Console.WriteLine("Error: The review with this ID does not exist.");
+            return;
+        }
+        
+        var review = new Review();
+        
+        review.Id = reviewId;
+        Console.WriteLine("Please enter the comment you would like to update: ");
+        review.Comment =  Console.ReadLine();
+        review.CreatedAt = DateTime.UtcNow;
+        _reviewRepository.UpdateReview(review);
+    }
+    
     public void run()
     {
         //printReviewsByMovieId();
         //addReview();
-        deleteReview();
+        //deleteReview();
+        updateReview();
     }
 }
