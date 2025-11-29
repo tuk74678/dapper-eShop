@@ -43,12 +43,13 @@ public class ReviewRepository: IReviewRepository
             "SELECT COUNT(1) FROM Reviews WHERE Id = @ReviewId", new { ReviewId = reviewId });
         return count > 0;
     }
+    // Delete a review via the Review Id from user input
     public int DeleteReview(int id)
     {
         return _dbConnection.Execute(
             "DELETE FROM Reviews WHERE Id = @id", new { Id = id });
     }
-
+    // Update review via Review Id from user input
     public int UpdateReview(Review review)
     {
         return _dbConnection.Execute(
