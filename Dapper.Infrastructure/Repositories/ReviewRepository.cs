@@ -19,6 +19,14 @@ public class ReviewRepository: IReviewRepository
         return _dbConnection.Query<Review>("SELECT Id, MovieId, UserId, Rating, Comment, CreatedAt " +
                                            "FROM Reviews WHERE MovieId = @MovieId", new  { MovieId = movieId });
     }
+    // This is to check if MovieId does exist before Create operation
+    public bool MovieExists(int movieId)
+    {
+        var count = _dbConnection.QuerySingle<int>(
+            "SELECT COUNT(1) FROM Movies WHERE Id = @Id", new { Id = movieId });
+        return count > 0;
+    }
+    
     // Create a review via user input
     public int CreateReview(Review review)
     {
@@ -28,11 +36,17 @@ public class ReviewRepository: IReviewRepository
             review);
     }
     
-    public bool MovieExists(int movieId)
+    // This is to check that if ReviewID does exist before Delete operation
+    public bool ReviewExists(int reviewId)
     {
         var count = _dbConnection.QuerySingle<int>(
-            "SELECT COUNT(1) FROM Movies WHERE Id = @Id", new { Id = movieId });
+            "SELECT COUNT(1) FROM Reviews WHERE Id = @ReviewId", new { ReviewId = reviewId });
         return count > 0;
+    }
+    public int DeleteReview(int id)
+    {
+        return _dbConnection.Execute(
+            "DELETE FROM Reviews WHERE Id = @id", new { Id = id });
     }
 
     public bool UpdateReview(Review review)
@@ -40,8 +54,4 @@ public class ReviewRepository: IReviewRepository
         throw new NotImplementedException();
     }
 
-    public bool DeleteReview(int id)
-    {
-        throw new NotImplementedException();
-    }
 }
