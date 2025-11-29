@@ -14,7 +14,7 @@ public class ReviewService
 
     public void printReviewsByMovieId()
     {
-        Console.WriteLine("Please enter the movie ID:\n");
+        Console.WriteLine("Please enter the movie ID: ");
         int id = int.Parse(Console.ReadLine());
         IEnumerable<Review> reviews = _reviewRepository.GetReviewsByMovieId(id);
         if (!reviews.Any())
@@ -93,9 +93,42 @@ public class ReviewService
     
     public void run()
     {
-        //printReviewsByMovieId();
-        //addReview();
-        //deleteReview();
-        updateReview();
+        int choice = -1;
+
+        while (choice != 0)
+        {
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. Add Review");
+            Console.WriteLine("2. Delete Review");
+            Console.WriteLine("3. Update Review");
+            Console.WriteLine("4. Print Reviews by Movie ID");
+            Console.WriteLine("0. Exit");
+            Console.WriteLine("Your choice: ");
+            
+            choice = int.Parse(Console.ReadLine());
+            
+            switch (choice)
+            {
+                case 1:
+                    addReview();
+                    break;
+                case 2: 
+                    deleteReview();
+                    break;
+                case 3:
+                    updateReview();
+                    break;
+                case 4:
+                    printReviewsByMovieId();
+                    break;
+                case 0:
+                    Console.WriteLine("Exiting...");
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Please try again.");
+                    break;
+            }
+        }
     }
 }
